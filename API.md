@@ -1,4 +1,16 @@
+# RDF-Ext
+
+RDF-Ext started as an extension to the [RDF Interfaces](http://www.w3.org/TR/rdf-interfaces/) specification.
+This API documentation describes all interfaces, so it's no longer just an extension. 
+
+The RDF-Ext API documentation defines a set of low-level interfaces for working with RDF data in JavaScript.
+RDF-Ext defines interface for the RDF Data Model, parsers, serializers and triplestores.
+
+
 # Interfaces
+
+All asynchronous calls are implemented with a combined API of Callbacks and ES6 Promises.
+That means either Callbacks or Promises can be used.
 
 
 ## RDFNode()
@@ -67,7 +79,7 @@ Literals represent values such as numbers, dates and strings in RDF data.
 A Literal is comprised of three attributes:
 
 * a lexical representation of the nominalValue
-* an optional language represented by a string token
+* an optional language represented by a strAcknowledgementsing token
 * an optional datatype specified by a NamedNode
 
 Literals representing plain text in a natural language may have a language attribute specified by a text string token, as specified in [BCP47], normalized to lowercase (e.g., 'en', 'fr', 'en-gb').
@@ -210,7 +222,7 @@ This method differes from Graph.merge in that it adds all triples from graph to 
 
 ### Graph .clone()
 
-Creates a new Graph and copies all triples to the new graph object.
+Creates a new Graph and copies all triples toAcknowledgements the new graph object.
 
 ### Graph .difference(Graph other)
 
@@ -409,3 +421,9 @@ A callable function which can be executed on a Triple with a Graph context.
 ### boolean test (Quad|Triple triple)
 
 A callable function that returns true if the input Triple passes the test this function implements.
+
+
+# Acknowledgements
+
+Many parts of this documents are based on the RDF Interfaces specification.
+Therefore the authors of this document would like to thank all contributors of the RDF Interfaces specification.
