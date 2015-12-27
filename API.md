@@ -197,44 +197,103 @@ Creates a new Graph object and optional adds all triple from other using the .ad
 
 ### Graph .add(Quad|Triple triple)
 
+Adds the specified triple to the graph.
+This method returns the graph instance it was called on.
+
 ### Graph .addAll(Array|Graph other)
 
-other must provide a .forEach function to loop over all triples.
-Returns the own object instance.
+Imports the graph in to this graph.
+The method accepts any object that provides an Array compatible .forEach method.
+This method returns the graph instance it was called on.
+
+This method differes from Graph.merge in that it adds all triples from graph to the current instance, rather than combining the two graphs to create a new instance.
 
 ### Graph .clone()
 
-Creates a new Graph and copies all Triples to it.
+Creates a new Graph and copies all triples to the new graph object.
 
 ### Graph .difference(Graph other)
 
+Creates a new graph that contains all triples which are not included in other.
+
 ### boolean .equals(Graph other)
+
+Returns true if the canonical representation of this graph and other graph is equal.
 
 ### boolean .every(TripleFilter callback)
 
+Universal quantification method, tests whether every triple in the graph passes the test implemented by the provided TripleFilter.
+This method will return boolean false when the first triple is found that does not pass the test.
+
+Note: This method is aligned with Array.prototype.every() in ECMAScript-262.
+
 ### Graph .filter(TripleFilter callback)
+
+Creates a new Graph with all the triples which pass the test implemented by the provided TripleFilter.
+
+Note: This method is aligned with Array.prototype.filter() in ECMAScript-262.
 
 ### void .forEach(TripleCallback callback)
 
+Executes the provided TripleCallback once on each triple in the graph.
+
+Note: This method is aligned with Array.prototype.forEach() in ECMAScript-262.
+
 ### boolean .includes(Quad|Triple triple)
+
+Returns true if the graph contains the given triple.
 
 ### Graph .intersection(Graph other)
 
+Creates a new graph that contains all triples which are included in this graph and other graph.
+
 ### Array .map(TripleCallback callback)
+
+Executes the provided TripleCallback once on each triple in the graph and returns an Array that contains all returns values of the callback.
+
+Note: This method is aligned with Array.prototype.map() in ECMAScript-262.
 
 ### Graph .match(optional RDFNode|RegExp|String subject, optional RDFNode|RegExp|String predicate, optional RDFNode|RegExp|String object, optional RDFNode|RegExp|String graph)
 
+This method returns a new Graph which is comprised of all those triples in the current instance which match the given arguments, that is, for each triple in this graph, it is included in the output graph, if:
+Calling .equals() with the specified subject, predicate, object or graph as an arguments returns true, or the argument is null.
+This method implements AND functionality, so only triples matching all of the given non-null arguments will be included in the result.
+
+Note: This method always returns a new Graph, even if that graph contains no triples.
+
 ### Graph .merge(Array|Graph other)
+
+Returns a new Graph which is a concatenation of this graph and the graph given as an argument.
 
 ### Graph .remove(Quad|Triple triple)
 
+Removes the specified triple from the graph. 
+This method returns the graph instance it was called on. 
+
 ### Graph .removeMatches(optional RDFNode|RegExp|String subject, optional RDFNode|RegExp|String predicate, optional RDFNode|RegExp|String object, optional RDFNode|RegExp|String graph)
+
+This method removes those triples in the current instance which match the given arguments, that is, for each triple in this graph, it is removed, if:
+
+Calling .equals() with the specified subject, predicate, object or graph as an arguments returns true, or the argument is null.
+This method implements AND functionality, so only triples matching all of the given non-null arguments will be included in the result.
 
 ### boolean .some(TripleFilter callback)
 
+Existential quantification method, tests whether some triples in the graph passes the test implemented by the provided TripleFilter.
+
+This method will return boolean true when the first triple is found that passes the test.
+
+Note: This method is aligned with Array.prototype.some() in ECMAScript-262.
+
 ### Array .toArray()
 
+Returns the set of triples within the graph as an Array defined in ECMAScript-262.
+
+Note: The order of the triples within the returned sequence is arbitrary, since a Graph is an unordered set.
+
 ### String .toString()
+
+Returns the N-Triples representation of the graph.
 
 
 ## Parser
