@@ -61,7 +61,7 @@ Returns the N-Triples represenation of the BlankNode.
 Return the stringified nominalValue.
 
 
-## Literal(String value, String language, String datatype, any native) extends RDFNode
+## Literal(String value, optional String language, optional String datatype, optional any native) extends RDFNode
 
 Literals represent values such as numbers, dates and strings in RDF data.
 A Literal is comprised of three attributes:
@@ -169,7 +169,7 @@ Datatype Map:
 ### String .valueOf()
 
 
-## Triple(RDFNode, subject, RDFNode, predicate, RDFNode, object)
+## Triple(RDFNode subject, RDFNode predicate, RDFNode object)
 
 ### boolean .equals(other)
 
@@ -180,7 +180,7 @@ Datatype Map:
 ### String .toString()
 
 
-## Quad(RDFNode subject, RDFNodepredicate, RDFNode object, RDFNode graph)
+## Quad(RDFNode subject, RDFNode predicate, RDFNode object, RDFNode graph)
 
 ### boolean .equals(other)
 
@@ -191,11 +191,11 @@ Datatype Map:
 ### Triple .toTriple()
 
 
-## Graph([Array|Graph other])
+## Graph(optional Array|Graph other)
 
 Creates a new Graph object and optional adds all triple from other using the .addAll method.
 
-### Graph .add(Quad|Triple quad)
+### Graph .add(Quad|Triple triple)
 
 ### Graph .addAll(Array|Graph other)
 
@@ -210,27 +210,27 @@ Creates a new Graph and copies all Triples to it.
 
 ### boolean .equals(Graph other)
 
-### boolean .every(Function callback)
+### boolean .every(TripleFilter callback)
 
-### Graph .filter(Function callback)
+### Graph .filter(TripleFilter callback)
 
-### undefined .forEach(Function callback)
+### void .forEach(TripleCallback callback)
 
-### boolean .includes(Quad|Triple quad)
+### boolean .includes(Quad|Triple triple)
 
 ### Graph .intersection(Graph other)
 
-### Array .map(Function callback)
+### Array .map(TripleCallback callback)
 
-### Graph .match(RDFNode|RegExp|String subject, RDFNode|RegExp|String predicate, RDFNode|RegExp|String object, [RDFNode|RegExp|String graph])
+### Graph .match(optional RDFNode|RegExp|String subject, optional RDFNode|RegExp|String predicate, optional RDFNode|RegExp|String object, optional RDFNode|RegExp|String graph)
 
 ### Graph .merge(Array|Graph other)
 
-### Graph .remove(Quad|Triple quad)
+### Graph .remove(Quad|Triple triple)
 
-### Graph .removeMatches(RDFNode|RegExp|String subject, RDFNode|RegExp|String predicate, RDFNode|RegExp|String object, [RDFNode|RegExp|String graph])
+### Graph .removeMatches(optional RDFNode|RegExp|String subject, optional RDFNode|RegExp|String predicate, optional RDFNode|RegExp|String object, optional RDFNode|RegExp|String graph)
 
-### boolean .some(Function callback)
+### boolean .some(TripleFilter callback)
 
 ### Array .toArray()
 
@@ -343,3 +343,10 @@ A function to be executed after asynchronous processing is done.
 ### void run (Quad|Triple triple, Graph graph)
 
 A callable function which can be executed on a Triple with a Graph context.
+
+
+## TripleFilter
+
+### boolean test (Quad|Triple triple)
+
+A callable function that returns true if the input Triple passes the test this function implements.
