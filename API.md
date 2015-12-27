@@ -1,5 +1,6 @@
 # Interfaces
 
+
 ## RDFNode()
 
 RDFNode is the base class of NamedNode, BlankNode, and Literal.
@@ -32,6 +33,7 @@ The stringification of an RDFNode is refined by each interface which extends RDF
 
 This method provides access to the implementations host environment native value for this RDFNode.
 
+
 ## BlankNode() extends RDFNode
 
 A BlankNode is a reference to an unnamed resource (one for which an IRI is not known), and may be used in a Triple as a unique reference to that unnamed resource.
@@ -57,6 +59,7 @@ Returns the N-Triples represenation of the BlankNode.
 ### String .valueOf()
 
 Return the stringified nominalValue.
+
 
 ## Literal(String value, String language, String datatype, any native) extends RDFNode
 
@@ -158,11 +161,13 @@ Datatype Map:
 * xsd:unsignedByte number
 * xsd:positiveInteger number
 
+
 ## NamedNode(String iri) extends RDFNode
 
 ### String .toString()
 
 ### String .valueOf()
+
 
 ## Triple(RDFNode, subject, RDFNode, predicate, RDFNode, object)
 
@@ -174,6 +179,7 @@ Datatype Map:
 
 ### String .toString()
 
+
 ## Quad(RDFNode subject, RDFNodepredicate, RDFNode object, RDFNode graph)
 
 ### boolean .equals(other)
@@ -183,6 +189,7 @@ Datatype Map:
 ### String .toString()
 
 ### Triple .toTriple()
+
 
 ## Graph([Array|Graph other])
 
@@ -228,3 +235,111 @@ Creates a new Graph and copies all Triples to it.
 ### Array .toArray()
 
 ### String .toString()
+
+
+## Parser
+
+The Parser is a generic RDF document parser which can be used to either parse the triples serialized within an RDF document in to a Graph, or to process an RDF document by passing each triple found to a TripleCallback for processing.
+
+### Promise parse (any toparse, GraphCallback callback, optional String base, optional TripleFilter filter, optional Graph graph)
+
+Parses the triples serialized within an input RDF document in to a Graph, then executes a given GraphCallback on the populated Graph.
+
+If a TripleFilter is passed to the parser, then each Triple found in the document will only be added to the output Graph if it passes the test implemented by the TripleFilter.
+
+By default a new Graph is provided, however users may optionally specify a Graph to which the parsed triples will be added.
+This allows users to provide a custom or persistent Graph implementation, or to automatically merge the triples from several documents in to a single Graph.
+
+* **toparse** The document to parse, the type of argument required may further be constrained by implementations of this interface, for instance an RDFa parser may require an instance of Document, whilst a Turtle parser may require a String.
+* **callback** The GraphCallback to execute once the parse has completed, the ParserCallback will be passed a single argument which is the propulated Graph.
+* **base** An optional base to be used by the parser when resolving relative IRI references.
+* **filter** An optional TripleFilter to test each Triple against before adding to the output Graph, only those triples successfully passing the test will be added to the output graph.
+* **graph** An optional Graph to add the parsed triples to, if no Graph is provided then a new, empty, Graph will be used.
+
+### Promise process (any toparse, ProcessorCallback callback, optional String base, optional TripleFilter filter, optional SuccessCallback done)
+
+Parses the triples serialized within an input RDF document and passes each (non filtered) Triple found to a ProcessorCallback, this interface allows RDF documents to be processed by SAX-like parsers whilst maintaining a minimal memory footprint.
+
+If a TripleFilter is passed to the parser, then each Triple found in the document will only be passed to the ProcessorCallback if it passes the test implmented by the filter.
+
+* **toparse** The document to parse, the type of argument required may further be constrained by implementations of this interface, for instance an RDFa parser may require an instance of Document, whilst a Turtle parser may require a String.
+* **callback** The ProcessorCallback to execute on each (non-filtered) Triple found by the parser.
+* **base** An optional base to be used by the parser when resolving relative IRI references.
+* **filter** An optional TripleFilter to test each Triple against before adding to the output Graph, only those triples successfully passing the test will be added to the output graph.
+
+
+## Serializer
+
+The Serializer is a generic interface implemented by Graph serializers.
+
+Implementations of this interface may further constrain the return type, for instance an RDFa serializer may return an instance of Document, whilst a Turtle serializer may return a String.
+
+### Promise serialize (Graph graph, optional DataCallback callback)
+
+A method, which when called will serialize the given Graph and return the resulting serialization to the DataCallback and Promise.	
+
+
+## Store
+
+### Promise graph (RDFNode|String namedGraph, GraphCallback callback)
+
+Calls the callback function passing the requested NamedGraph as Graph object.
+
+### Promise match (RDFNode|RegExp|String subject, RDFNode|RegExp|String predicate, RDFNode|RegExp|String object, RDFNode namedGraph, GraphCallback callback, optional unsigned long limit)
+
+Calls the callback function passing the requested NamedGraph as Graph object using SPO matching and limit filtering.
+
+### Promise add (RDFNode|String namedGraph, Graph graph, GraphCallback callback)
+
+Creates or replaces the NamedGraph with the given Graph object and calls the callback function passing the added triples as Graph object.
+
+### Promise merge (RDFNode|String namedGraph, Graph graph, GraphCallback callback)
+
+Merges triples from the given Graph object to the NamedGraph and calls the callback function passing the merged triples as Graph object.
+
+### Promise remove (RDFNode|String namedGraph, Graph graph, SuccessCallback callback)
+
+Removes all triples given as Graph object from the NamedGraph.
+
+### Promise removeMatches (RDFNode|RegExp|String subject, RDFNode|RegExp|String predicate, RDFNode|RegExp|String object, RDFNode|String namedGraph, SuccessCallback callback)
+
+Removes all triples of the NamedGraph based on SPO matches.
+
+### Promise delete (RDFNode namedGraph, SuccessCallback callback)
+
+Deletes the NamedGraph.
+
+
+## DataCallback
+
+### void run (Error error, any data)
+
+A function to be executed on serialized data.
+
+
+## GraphCallback
+
+### void run (Error error, Graph graph)
+
+A function to be executed on a Graph.
+
+
+## ProcessorCallback
+
+### void run (Quad|Triple triple)
+
+A function to be executed on a Triple produced by a process operation on an RDF Document.
+
+
+## SuccessCallback
+
+### void run (Error error, boolean success)
+
+A function to be executed after asynchronous processing is done.
+
+
+## TripleCallback
+
+### void run (Quad|Triple triple, Graph graph)
+
+A callable function which can be executed on a Triple with a Graph context.
