@@ -381,6 +381,55 @@ Removes all triples of the NamedGraph based on SPO matches.
 Deletes the NamedGraph.
 
 
+## Parsers Parsers (optional Object parsers)
+
+Adds all given parsers to the Parsers object.
+The parsers arguments must be a object with the media type as key and an Parser instance as value.
+It's possible to assign multiple parsers to one media type using an Array.
+
+### Object .list ()
+
+Returns all parsers in an media type as key, Parser instance as value object.
+
+### Array .findParsers (String mediaType)
+
+Returns an array of parsers assigned to the given media type. 
+
+### Promise .parse (String mediaType, any data, optional GraphCallback callback, optional String base, optional TripleFilter filter, optional Graph graph)
+
+Forwards the .parse call to the Parser instance assigned to given media type.
+
+### Promise .process (String mediaType, any data, ProcessorCallback callback, optional String base, optional TripleFilter filter, optional SuccessCallback done) {
+
+Forwards the .process call to the Parser instance assigned to given media type.
+
+### Stream .stream (String mediaType, Stream inputStream, optional String base, optional TripleFilter filter) {
+
+Forwards the .stream call to the Parser instance assigned to given media type.
+
+
+## Serializers (serializers)
+
+Adds all given serializers to the Serializers object.
+The serializers arguments must be a object with the media type as key and an Serializer instance as value.
+
+### Object .list ()
+
+Returns all serializers in an media type as key, Serializer instance as value object.
+
+### Serializer .findSerializer (String mediaType) {
+
+Returns the Serializer instance for the given media type.
+
+### Promise .serialize (String mediaType, graph, optional DataCallback callback) {
+
+Forwards the .serialize call to the Serializer instance assigned to given media type.
+
+### Stream .stream (String mediaType, Stream inputStream, optional String base) {
+
+Forwards the .stream call to the Serializer instance assigned to given media type.
+
+
 ## DataCallback
 
 ### void run (Error error, any data)
