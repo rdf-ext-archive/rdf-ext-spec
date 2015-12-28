@@ -417,15 +417,15 @@ The serializers arguments must be a object with the media type as key and an Ser
 
 Returns all serializers in an media type as key, Serializer instance as value object.
 
-### Serializer .findSerializer (String mediaType) {
+### Serializer .findSerializer (String mediaType)
 
 Returns the Serializer instance for the given media type.
 
-### Promise .serialize (String mediaType, graph, optional DataCallback callback) {
+### Promise .serialize (String mediaType, graph, optional DataCallback callback)
 
 Forwards the .serialize call to the Serializer instance assigned to given media type.
 
-### Stream .stream (String mediaType, Stream inputStream, optional String base) {
+### Stream .stream (String mediaType, Stream inputStream, optional String base)
 
 Forwards the .stream call to the Serializer instance assigned to given media type.
 
