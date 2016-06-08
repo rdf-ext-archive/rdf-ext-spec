@@ -190,7 +190,7 @@
 		<h3>GraphCallback</h3>
 
 		<dl title='[NoInterfaceObject, Callback] interface GraphCallback' class='idl'>
-			<dt>void run (Graph graph, any? error)</dt>
+			<dt>void run (any? error, Graph graph)</dt>
 			<dd>A function to be executed on a Graph.</dd>
 		</dl>
 	</section>
@@ -199,7 +199,7 @@
 		<h3>SuccessCallback</h3>
 
 		<dl title='[NoInterfaceObject, Callback] interface SuccessCallback' class='idl'>
-			<dt>void run (boolean success, any? error)</dt>
+			<dt>void run (any? error, boolean success)</dt>
 			<dd>A function to be executed after asynchronous processing is done.</dd>
 		</dl>
 	</section>
